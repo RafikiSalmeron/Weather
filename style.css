@@ -1,9 +1,15 @@
+body {
+  background: rgb(255,255,255);
+  background: linear-gradient(180deg, rgba(255,255,255,0.7595413165266106) 0%, rgba(42,164,255,1) 50%, rgba(255,255,255,1) 100%);
+}
+
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-left: 5em;
   padding-right: 5em;
+  padding-top: 1rem;
 }
 
 #bloque {
@@ -23,4 +29,41 @@ header {
 
 table {
   width: 100%;
+}
+
+.form-inline{
+  display:flex;
+  flex-direction: row;
+}
+
+#buscar {
+  display: flex;
+  flex-direction: row;
+}
+
+#search {
+  margin-right: 1em;
+}
+
+tr>td:first-of-type {
+  font-weight: bold;
+}
+
+.btn-primary {
+  margin-top: 1em;
+}
+
+#bodyModal{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#bodyModal>table{
+  width: 80%;
+}
+
+.modal-content{
+  background: rgb(16,157,255);
+  background: linear-gradient(160deg, rgba(16,157,255,0.7595413165266106) 0%, rgba(255,255,255,1) 100%, rgba(0,212,255,1) 100%);
 }
