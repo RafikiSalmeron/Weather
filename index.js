@@ -8,8 +8,20 @@ var modalWrap = null;
 var tablaModal = null;
 
 window.onload = function() {
+  enter();
   loadDoc();
 };
+
+function enter(){
+  busqueda = document.getElementById("search");
+  busqueda.addEventListener("keyup", function(event) {
+      if (event.keyCode === 13) {
+          event.preventDefault();
+          document.getElementById("btnSearch").click();
+          busqueda.value = "";
+      }
+  });
+}
 
 function loadDoc() {
   var xhttp = new XMLHttpRequest();
