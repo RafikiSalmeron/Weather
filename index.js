@@ -8,18 +8,18 @@ var modalWrap = null;
 var tablaModal = null;
 
 window.onload = function() {
+  geoFindMe();
   enter();
-  loadDoc();
 };
 
-function enter(){
+function enter() {
   busqueda = document.getElementById("search");
   busqueda.addEventListener("keyup", function(event) {
-      if (event.keyCode === 13) {
-          event.preventDefault();
-          document.getElementById("btnSearch").click();
-          busqueda.value = "";
-      }
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      document.getElementById("btnSearch").click();
+      busqueda.value = "";
+    }
   });
 }
 
@@ -36,6 +36,22 @@ function loadDoc() {
     }
   };
   xhttp.open("GET", "https://api.weatherbit.io/v2.0/forecast/daily?city=Granada,ES&key=" + API_KEY, true);
+  xhttp.send();
+}
+
+function loadDocLatLong(lat, long) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      datos = JSON.parse(this.responseText);
+      cargarTiempo(datos);
+    }
+    if (this.readyState == 4 && this.status == 204) {
+      console.log("Error");
+      alert("No se encuentra la ciudad especificada. Disculpe las molestias");
+    }
+  };
+  xhttp.open("GET", "https://api.weatherbit.io/v2.0/forecast/daily?lat=" + lat + "&lon=" + long +"&key=" + API_KEY, true);
   xhttp.send();
 }
 
@@ -343,4 +359,24 @@ function traducirTiempo(prec) {
 function convertDateFormat(string) {
   var info = string.split('-').reverse().join('/');
   return info;
+}
+
+
+function geoFindMe() {
+  function success(posicion) {
+    const latitud = posicion.coords.latitude;
+    const longitud = posicion.coords.longitude;
+    console.log('Se pudo obtener tu localización : Lat -> ' + latitud + "    Lon -> " + longitud);
+    loadDocLatLong(latitud,longitud);
+  }
+
+  function error() {
+    console.log('No se pudo obtener tu localización');
+    loadDoc();
+  }
+
+  if (!navigator.geolocation) {} else {
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+
 }
